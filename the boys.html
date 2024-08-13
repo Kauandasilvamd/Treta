@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Filme</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #000;
+            color: #fff;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #000;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .movie-header {
+            display: flex;
+            align-items: center;
+        }
+        .movie-header img {
+            width: 150px;
+            height: auto;
+            border-radius: 8px;
+            margin-right: 20px;
+        }
+        .movie-header h1 {
+            margin: 0;
+            font-size: 2em;
+            color: #fff;
+        }
+        .movie-header p {
+            margin: 5px 0;
+        }
+        .movie-description {
+            margin-top: 20px;
+        }
+        .season-menu {
+            position: relative;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .season-menu button {
+            background: #e50914; /* Cor vermelha para o botão de temporadas */
+            border: none;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .season-menu button:hover {
+            background: #b81d13; /* Cor vermelha mais escura ao passar o mouse */
+        }
+        .season-dropdown {
+            display: none;
+            position: absolute;
+            background: #222;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            z-index: 1;
+            top: 100%;
+            left: 0;
+            width: 200px;
+        }
+        .season-dropdown button {
+            background: #222;
+            border: none;
+            color: #fff;
+            padding: 10px;
+            width: 100%;
+            text-align: left;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .season-dropdown button:hover {
+            background: #444;
+        }
+        .episodes {
+            display: none;
+            margin-top: 20px;
+        }
+        .episodes ul {
+            list-style: none;
+            padding: 0;
+        }
+        .episodes li {
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+        .episodes li:hover {
+            text-decoration: underline;
+        }
+        .video-player {
+            display: none; /* Player hidden by default */
+            position: relative;
+            width: 100%;
+            max-width: 640px; /* Size for mobile */
+            margin-top: 20px;
+            background-color: #000;
+            border-radius: 8px;
+            border: 3px solid #e50914; /* Red border around the player */
+            overflow: hidden;
+        }
+        .video-player iframe {
+            width: 100%;
+            height: 20%;
+            border: none;
+        }
+        .video-message {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 1.5em;
+            z-index: 10;
+            text-align: center;
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1.2em;
+            color: #fff;
+            background-color: #e50914;
+            padding: 3px 3px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+        }
+        .back-button:hover {
+            text-decoration: underline;
+        }
+        .back-button::before {
+            content: '←';
+            margin-right: 10px;
+        }
+        .category-section {
+            margin-top: 40px;
+        }
+        .category-section h2 {
+            font-size: 1.8em;
+            color: #fff;
+        }
+        .category-section .category-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .category-section .category-item {
+            background: #222;
+            border-radius: 8px;
+            overflow: hidden;
+            width: calc(33.333% - 20px);
+            box-sizing: border-box;
+        }
+        .category-section .category-item img {
+            width: 100%;
+            height: auto;
+        }
+        .category-section .category-item h3 {
+            margin: 0;
+            padding: 10px;
+            background: #333;
+            color: #fff;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Botão de Voltar para Página Inicial -->
+        <a href="home.html" class="back-button">Voltar</a>
+
+        <div class="movie-header">
+            <img src="https://image.tmdb.org/t/p/w185/2zmTngn1tYC1AvfnrFLhxeD82hz.jpg" alt="Capa do Filme">
+            <div>
+                <h1>The Boys</h1>
+                <p><strong>Gênero:</strong> Ação, Aventura</p>
+                <p><strong>Duração:</strong> 60 min</p>
+                <p><strong>Avaliação:</strong> 8.5/10</p>
+            </div>
+        </div>
+        <div class="movie-description">
+            <h2>Sinopse</h2>
+            <p>Na trama, conhecemos um mundo em que super-heróis são as maiores celebridades do planeta, e rotineiramente abusam dos seus poderes ao invés de os usarem para o bem.</p>
+        </div>
+
+        <!-- Mensagem e Player de Vídeo Dinâmico -->
+        <div id="videoPlayer" class="video-player">
+            <div class="video-message" id="videoMessage">
+                <h2>Seu filme está pronto para assistir</h2>
+            </div>
+        </div>
+
+        <!-- Menu de Temporadas -->
+        <div class="season-menu">
+            <button onclick="toggleMenu()">Mostrar Temporadas</button>
+            <div id="seasonDropdown" class="season-dropdown">
+                <button onclick="toggleEpisodes('season1')">Temporada 1</button>
+                <button onclick="toggleEpisodes('season2')">Temporada 2</button>
+                <button onclick="toggleEpisodes('season3')">Temporada 3</button>
+                <button onclick="toggleEpisodes('season4')">Temporada 4</button>
+                <button onclick="toggleEpisodes('season5')">Temporada 5</button>
+            </div>
+        </div>
+
+        <!-- Conteúdo das Temporadas e Episódios -->
+        <div id="seasonContent">
+            <!-- Temporada 1 -->
+            <div id="season1" class="episodes">
+                <h2>Temporada 1: 25 episódios</h2>
+                <ul>
+                    <li onclick="playEpisodeWithIframe('https://www.youtube.com/embed/VIDEO_ID1')">Episódio 1</li>
+                    <li onclick="playEpisodeWithIframe('https://www.youtube.com/embed/VIDEO_ID2')">Episódio 2</li>
+                    <li onclick="playEpisodeWithIframe('https://www.youtube.com/embed/VIDEO_ID3')">Episódio 3</li>
+                    <!-- Adicionar os demais episódios com iframe -->
+                    <li onclick="playEpisodeWithIframe('https://www.youtube.com/embed/VIDEO_ID4')">Episódio 4</li>
+                    <li onclick="playEpisodeWithIframe('https://www.youtube.com/embed/VIDEO_ID5')">Episódio 5</li>
+                    <!-- Continuar adicionando episódios -->
+                </ul>
+            </div>
+
+            <!-- Temporada 2 -->
+            <div id="season2" class="episodes">
+                <h2>Temporada 2: 25 episódios</h2>
+                <ul>
+                    <li onclick="playEpisodeWithIframe('https://www.youtube.com/embed/VIDEO_ID6')">Episódio 1</li>
+                    <li onclick="playEpisodeWithIframe('https://www.youtube.com/embed/VIDEO_ID7')">Episódio 2</li>
+                    <li onclick="playEpisodeWithIframe('https://www.youtube.com/embed/VIDEO_ID8')">Episódio 3</li>
+                    <!-- Adicionar os demais episódios com iframe -->
+                    <li onclick="playEpisodeWithIframe('https://www.youtube.com/embed/VIDEO_ID9')">Episódio 4</li>
+                    <li onclick="playEpisodeWithIframe('https://www.youtube.com/embed/VIDEO_ID10')">Episódio 5</li>
+                    <!-- Continuar adicionando episódios -->
+                </ul>
+            </div>
+
+            <!-- Temporada 3 -->
+            <div id="season3" class="episodes">
+                <h2>Temporada 3: 25 episódios</h2>
+                <ul>
+                    <li onclick="playEpisodeWithIframe('https://superembeds.com/embed2/76479-3-1')">Episódio 1</li>
+                    <li onclick="playEpisodeWithIframe('https://www.youtube.com/embed/VIDEO_ID12')">Episódio 2</li>
+                    <li onclick="playEpisodeWithIframe('https://www.youtube.com/embed/VIDEO_ID13')">Episódio 3</li>
+                    <!-- Adicionar os demais episódios com iframe -->
+                    <li onclick="playEpisodeWithIframe('https://www.youtube.com/embed/VIDEO_ID14')">Episódio 4</li>
+                    <li onclick="playEpisodeWithIframe('https://www.youtube.com/embed/VIDEO_ID15')">Episódio 5</li>
+                    <!-- Continuar adicionando episódios -->
+                </ul>
+            </div>
+
+            <!-- Temporada 4 -->
+            <div id="season4" class="episodes">
+                <h2>Temporada 4: 25 episódios</h2>
+                <ul>
+                    <li onclick="playEpisodeWithIframe('https://www.youtube.com/embed/VIDEO_ID16')">Episódio 1</li>
+                    <li onclick="playEpisodeWithIframe('https://www.youtube.com/embed/VIDEO_ID17')">Episódio 2</li>
+                    <li onclick="playEpisodeWithIframe('https://www.youtube.com/embed/VIDEO_ID18')">Episódio 3</li>
+                    <!-- Adicionar os demais episódios com iframe -->
+                    <li onclick="playEpisodeWithIframe('https://www.youtube.com/embed/VIDEO_ID19')">Episódio 4</li>
+                    <li onclick="playEpisodeWithIframe('https://www.youtube.com/embed/VIDEO_ID20')">Episódio 5</li>
+                    <!-- Continuar adicionando episódios -->
+                </ul>
+            </div>
+
+            <!-- Temporada 5 -->
+            <div id="season5" class="episodes">
+                <h2>Temporada 5: 25 episódios</h2>
+                <ul>
+                    <li onclick="playEpisodeWithIframe('https://www.youtube.com/embed/VIDEO_ID21')">Episódio 1</li>
+                    <li onclick="playEpisodeWithIframe('https://www.youtube.com/embed/VIDEO_ID22')">Episódio 2</li>
+                    <li onclick="playEpisodeWithIframe('https://www.youtube.com/embed/VIDEO_ID23')">Episódio 3</li>
+                    <!-- Adicionar os demais episódios com iframe -->
+                    <li onclick="playEpisodeWithIframe('https://www.youtube.com/embed/VIDEO_ID24')">Episódio 4</li>
+                    <li onclick="playEpisodeWithIframe('https://www.youtube.com/embed/VIDEO_ID25')">Episódio 5</li>
+                    <!-- Continuar adicionando episódios -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Função para alternar a visibilidade do menu de temporadas
+        function toggleMenu() {
+            var dropdown = document.getElementById('seasonDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Função para alternar a visibilidade dos episódios de cada temporada
+        function toggleEpisodes(seasonId) {
+            // Esconder todos os elementos .episodes
+            var episodes = document.querySelectorAll('.episodes');
+            episodes.forEach(function(episode) {
+                episode.style.display = 'none';
+            });
+
+            // Mostrar apenas o episódio da temporada selecionada
+            var selectedSeason = document.getElementById(seasonId);
+            if (selectedSeason) {
+                selectedSeason.style.display = 'block';
+            }
+
+            // Esconder o menu de temporadas após selecionar uma temporada
+            var dropdown = document.getElementById('seasonDropdown');
+            dropdown.style.display = 'none';
+        }
+
+        // Função para reproduzir um episódio com iframe
+        function playEpisodeWithIframe(videoUrl) {
+            var videoPlayer = document.getElementById('videoPlayer');
+            var videoMessage = document.getElementById('videoMessage');
+
+            // Esconder a mensagem de vídeo pronto e mostrar o player
+            videoMessage.style.display = 'none';
+            videoPlayer.style.display = 'block';
+
+            // Criar e adicionar o iframe ao player
+            var iframe = document.createElement('iframe');
+            iframe.src = videoUrl;
+            iframe.allowFullscreen = true;
+            videoPlayer.innerHTML = 'envie um pix para froseli550@gmail.com'; // Limpar o conteúdo anterior do player
+            videoPlayer.appendChild(iframe);
+        }
+    </script>
+</body>
+</html>

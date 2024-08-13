@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clone Netflix</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="nav">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix Logo" class="logo">
+            <!-- Botão "Entrar" removido da navegação -->
+        </div>
+        <div class="banner">
+            <h1>Assista a tudo o que quiser.</h1>
+            <p>Sem comerciais. Cancelamento a qualquer momento.</p>
+            <button class="start-btn" id="startBtn">Comece agora</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Conteúdo principal da página -->
+    </main>
+
+    <footer>
+        <p>Desenvolvido por [@kauan_da_silva_md3]</p>
+    </footer>
+
+    <!-- Modal de Login -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Entrar</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha:</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="login-btn">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Obtém referências aos elementos
+        const loginModal = document.getElementById('loginModal');
+        const closeModalBtn = document.querySelector('.close-btn');
+        const startBtn = document.getElementById('startBtn');
+        const loginForm = document.getElementById('loginForm');
+
+        // Abre o modal quando o botão "Comece agora" é clicado
+        startBtn.addEventListener('click', () => {
+            loginModal.style.display = 'flex';
+        });
+
+        // Fecha o modal quando o botão de fechar é clicado
+        closeModalBtn.addEventListener('click', () => {
+            loginModal.style.display = 'none';
+        });
+
+        // Fecha o modal se clicar fora da caixa do modal
+        window.addEventListener('click', (event) => {
+            if (event.target === loginModal) {
+                loginModal.style.display = 'none';
+            }
+        });
+
+        // Simula o login ao submeter o formulário
+        loginForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            // Simulação de autenticação - aqui você pode adicionar lógica real
+
+            // Fechar o modal após o login
+            loginModal.style.display = 'none';
+
+            // Redirecionar para a página home.html
+            window.location.href = 'home.html';
+        });
+    </script>
+</body>
+</html>

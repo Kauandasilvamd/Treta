@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bad Boys: Até o Fim</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #000;
+            color: #fff;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #000;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .movie-header {
+            display: flex;
+            align-items: center;
+        }
+        .movie-header img {
+            width: 150px;
+            height: auto;
+            border-radius: 8px;
+            margin-right: 20px;
+        }
+        .movie-header h1 {
+            margin: 0;
+            font-size: 2em;
+            color: #fff;
+        }
+        .movie-header p {
+            margin: 5px 0;
+        }
+        .movie-description {
+            margin-top: 20px;
+        }
+        .movie-description h2 {
+            margin-bottom: 10px;
+        }
+        .movie-description p {
+            margin: 0;
+            max-height: 150px;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .movie-description p.expanded {
+            max-height: none;
+        }
+        .read-more-button {
+            display: block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #e50914;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+        .read-more-button:hover {
+            background-color: #b81d12;
+        }
+        .video-player {
+            position: relative;
+            width: 100%;
+            max-width: 640px; /* Size for mobile */
+            margin-top: 20px;
+            background-color: #000;
+            border-radius: 8px;
+            border: 3px solid #e50914; /* Red border around the player */
+            overflow: hidden;
+        }
+        .video-player iframe {
+            width: 100%;
+            height: 200px; /* Adjust height accordingly */
+            border: none;
+        }
+        .video-message {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 1.5em;
+            z-index: 10;
+            text-align: center;
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1.2em;
+            color: #fff;
+            background-color: #e50914;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+        }
+        .back-button:hover {
+            background-color: #b81d12;
+        }
+        .back-button::before {
+            content: '←';
+            margin-right: 10px;
+        }
+        .recommendations-section {
+            margin-top: 40px;
+        }
+        .recommendations-section h2 {
+            font-size: 1.8em;
+            color: #fff;
+        }
+        .recommendations-section .recommendation-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .recommendations-section .recommendation-item {
+            background: #222;
+            border-radius: 8px;
+            overflow: hidden;
+            width: calc(33.333% - 20px);
+            box-sizing: border-box;
+            position: relative;
+        }
+        .recommendations-section .recommendation-item img {
+            width: 100%;
+            height: auto;
+        }
+        .recommendations-section .recommendation-item h3 {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: 0;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Botão de Voltar para Página Inicial -->
+        <a href="index.html" class="back-button">Voltar</a>
+
+        <div class="movie-header">
+            <img src="https://image.tmdb.org/t/p/w185/ak6VZDHms5T4p0eFISk336kqjR6.jpg" alt="Capa do Filme">
+            <div>
+                <h1>Deadpool & Wolverine</h1>
+                <p><strong>Gênero:</strong> Ação, crime</p>
+                <p><strong>Duração:</strong> 110 min</p>
+                <p><strong>Avaliação:</strong> 7.5/10</p>
+            </div>
+        </div>
+        <div class="movie-description">
+            <h2>Sinopse</h2>
+            <p id="synopsis-text">
+             Os Bad Boys preferidos do mundo todo estão de volta com a mistura icônica de ação eletrizante e comédia escrachada, mas, dessa vez, com uma virada: os melhores de Miami são agora os mais procurados.
+            </p>
+            
+        </div>
+
+        <!-- Mensagem e Player de Vídeo Dinâmico -->
+        <div id="videoPlayer" class="video-player">
+            <iframe src="https://superembeds.com/embed2/tt4919268" width="640" height="360" frameborder="0" allowfullscreen></iframe>
+        
+            <div class="video-message" id="videoMessage">
+                <h2>Seu filme está pronto para assistir</h2>
+            </div>
+        </div>
+
+        <!-- Seção de Recomendações de Filmes -->
+        <div class="recommendations-section">
+            <h2>Filmes Recomendados</h2>
+            <div class="recommendation-list">
+                <div class="recommendation-item">
+                    <img src="https://image.tmdb.org/t/p/w185/9r7wQMsThDjeR47nmjFScA65QeC.jpg" alt="Filme 1">
+                    <h3>Filme A</h3>
+                </div>
+                <div class="recommendation-item">
+                	<a href="Deadpool & Wolverine.html">
+                    <img src="https://images.justwatch.com/poster/314489929/s166/deadpool-3.webp" alt="Filme 2"> </a>
+                    
+                </div>
+                <div class="recommendation-item">
+                    <img src="https://image.tmdb.org/t/p/w185/a6c2Y8r9fE6ujCTxC8JD1Ftd8ov.jpg" alt="Filme 3">
+                    <h3>Filme C</h3>
+                </div>
+                <div class="recommendation-item">
+                    <img src="https://image.tmdb.org/t/p/w185/ik4i76pH8AD8QyEBkK13pPzEX37.jpg" alt="Filme 4">
+                    <h3>Filme D</h3>
+                </div>
+                <div class="recommendation-item">
+                    <img src="https://image.tmdb.org/t/p/w185/8ZarHnE5RmkkS4eT6N9rmJ78wa0.jpg" alt="Filme 5">
+                    <h3>Filme E</h3>
+                </div>
+                <div class="recommendation-item">
+                    <img src="https://image.tmdb.org/t/p/w185/4eO9iIb1JSbE9ps29OY3ZCqFl1T.jpg" alt="Filme 6">
+                    <h3>Filme F</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('read-more').addEventListener('click', function(e) {
+            e.preventDefault();
+            const synopsisText = document.getElementById('synopsis-text');
+            if (synopsisText.classList.contains('expanded')) {
+                synopsisText.classList.remove('expanded');
+                this.textContent = 'Ver Mais';
+            } else {
+                synopsisText.classList.add('expanded');
+                this.textContent = 'Ver Menos';
+            }
+        });
+    </script>
+</body>
+</html>
